@@ -1,4 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ProvaContext>(
+    options =>
+        options.UseSqlite(
+            builder.Configuration.GetConnectionString("ProvaContext")
+                ?? throw new InvalidOperationException(
+                    "Connection string 'ProvaContext' not found."
+                )
+        )
+);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -20,8 +32,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
