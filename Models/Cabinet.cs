@@ -20,7 +20,7 @@ namespace Prova.Models
         [Range(-180, 180, ErrorMessage = "Longitude inválida, digite um valor entre -180 e 180")]
         public double? Longitude { get; set; }
 
-        [DisplayName("Maps")]
+        [DisplayName("Localização no mapa")]
         public virtual string MapsUrl
         {
             get
