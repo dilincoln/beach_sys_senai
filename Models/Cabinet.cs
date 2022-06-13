@@ -29,5 +29,7 @@ namespace Prova.Models
                 return $"https://maps.google.com/maps?q={Latitude},{Longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed";
             }
         }
+
+        public ICollection<Compartment> Compartments { get; set; }
     }
 }

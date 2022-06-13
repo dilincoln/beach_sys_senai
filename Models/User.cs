@@ -23,5 +23,7 @@ namespace Prova.Models
         [Required(ErrorMessage = "E-mail obrigatório.")]
         [DisplayName("E-mail")]
         public string? Email { get; set; }
+
+        public ICollection<Compartment> Compartments { get; set; }
     }
 }
