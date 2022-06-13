@@ -13,6 +13,11 @@ namespace Prova.Models
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "CPF obrigatório.")]
+        [DisplayName("CPF")]
+        [RegularExpression(
+            @"^\d{3}\.\d{3}\.\d{3}-\d{2}$",
+            ErrorMessage = "CPF inválido. Informe o CPF com ponto e traço."
+        )]
         public string? Cpf { get; set; }
 
         [Required(ErrorMessage = "E-mail obrigatório.")]
