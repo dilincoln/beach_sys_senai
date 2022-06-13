@@ -21,9 +21,9 @@ namespace Prova.Controllers
         // GET: Cabinet
         public async Task<IActionResult> Index()
         {
-              return _context.Cabinet != null ? 
-                          View(await _context.Cabinet.ToListAsync()) :
-                          Problem("Entity set 'ProvaContext.Cabinet'  is null.");
+            return _context.Cabinet != null
+                ? View(await _context.Cabinet.ToListAsync())
+                : Problem("Entity set 'ProvaContext.Cabinet'  is null.");
         }
 
         // GET: Cabinet/Details/5
@@ -34,8 +34,7 @@ namespace Prova.Controllers
                 return NotFound();
             }
 
-            var cabinet = await _context.Cabinet
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cabinet = await _context.Cabinet.FirstOrDefaultAsync(m => m.Id == id);
             if (cabinet == null)
             {
                 return NotFound();
@@ -55,7 +54,9 @@ namespace Prova.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Available,Latitude,Longitude")] Cabinet cabinet)
+        public async Task<IActionResult> Create(
+            [Bind("Id,Name,Latitude,Longitude")] Cabinet cabinet
+        )
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +88,10 @@ namespace Prova.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Available,Latitude,Longitude")] Cabinet cabinet)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("Id,Name,Latitude,Longitude")] Cabinet cabinet
+        )
         {
             if (id != cabinet.Id)
             {
@@ -125,8 +129,7 @@ namespace Prova.Controllers
                 return NotFound();
             }
 
-            var cabinet = await _context.Cabinet
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cabinet = await _context.Cabinet.FirstOrDefaultAsync(m => m.Id == id);
             if (cabinet == null)
             {
                 return NotFound();
@@ -149,14 +152,14 @@ namespace Prova.Controllers
             {
                 _context.Cabinet.Remove(cabinet);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CabinetExists(int id)
         {
-          return (_context.Cabinet?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Cabinet?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

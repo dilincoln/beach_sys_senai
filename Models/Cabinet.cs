@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Prova.Models
 {
@@ -8,9 +9,8 @@ namespace Prova.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nome obrigatório")]
+        [DisplayName("Nome do armário")]
         public string? Name { get; set; }
-
-        public bool Available { get; set; } = true;
 
         [Required(ErrorMessage = "Latitude obrigatória")]
         [Range(-90, 90, ErrorMessage = "Latitude inválida, digite um valor entre -90 e 90")]
@@ -20,6 +20,7 @@ namespace Prova.Models
         [Range(-180, 180, ErrorMessage = "Longitude inválida, digite um valor entre -180 e 180")]
         public double? Longitude { get; set; }
 
+        [DisplayName("Maps")]
         public virtual string MapsUrl
         {
             get
