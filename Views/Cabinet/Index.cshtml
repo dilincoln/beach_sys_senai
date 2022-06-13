@@ -19,10 +19,7 @@
                 @Html.DisplayNameFor(model => model.Available)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Latitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitude)
+                Location
             </th>
             <th></th>
         </tr>
@@ -37,10 +34,7 @@
                 @Html.DisplayFor(modelItem => item.Available)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Latitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Longitude)
+                <iframe src="@Html.DisplayFor(modelItem => item.MapsUrl)" frameborder="0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

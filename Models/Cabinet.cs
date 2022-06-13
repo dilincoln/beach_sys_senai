@@ -17,5 +17,14 @@ namespace Prova.Models
 
         [Required(ErrorMessage = "Longitude obrigatória")]
         public double? Longitude { get; set; }
+
+        public virtual string MapsUrl
+        {
+            get
+            {
+                // Return embed map url without API key
+                return $"https://maps.google.com/maps?q={Latitude},{Longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed";
+            }
+        }
     }
 }
