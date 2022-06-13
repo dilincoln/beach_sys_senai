@@ -24,6 +24,6 @@ namespace Prova.Models
         [DisplayName("E-mail")]
         public string? Email { get; set; }
 
-        public ICollection<Compartment> Compartments { get; set; }
+        public ICollection<Compartment>? Compartments { get; set; }
     }
 }

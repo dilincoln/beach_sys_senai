@@ -30,6 +30,6 @@ namespace Prova.Models
             }
         }
 
-        public ICollection<Compartment> Compartments { get; set; }
+        public ICollection<Compartment>? Compartments { get; set; }
     }
 }
