@@ -12,4 +12,6 @@ public class ProvaContext : DbContext
     public DbSet<Prova.Models.User>? User { get; set; }
 
     public DbSet<Prova.Models.Cabinet>? Cabinet { get; set; }
+
+    public DbSet<Prova.Models.Compartment>? Compartment { get; set; }
 }

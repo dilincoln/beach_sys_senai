@@ -26,10 +26,11 @@ namespace Prova.Models
             get
             {
                 // Return embed map url without API key
-                return $"https://maps.google.com/maps?q={Latitude},{Longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed";
+                return $"https://maps.google.com/maps?q={Latitude},{Longitude}&t=&z=15&ie=UTF8&iwloc=&output=embed";
             }
         }
 
+        [DisplayName("Número dos Compartimentos")]
         public ICollection<Compartment>? Compartments { get; set; }
     }
 }

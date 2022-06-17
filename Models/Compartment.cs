@@ -7,10 +7,10 @@ namespace Prova.Models
     public class Compartment
     {
         [Key]
+        [DisplayName("Número do compartimento")]
         public int Id { get; set; }
 
         [ForeignKey("User")]
-        [DisplayName("Em uso por:")]
         public int? UserId { get; set; }
 
         [ForeignKey("Cabinet")]
@@ -18,18 +18,18 @@ namespace Prova.Models
         public int CabinetId { get; set; }
 
         [Required(ErrorMessage = "Largura obrigatória")]
-        [Range(1, 20, ErrorMessage = "Largura inválida, digite um valor entre 1 e 20")]
-        [DisplayName("Largura")]
-        public int? width { get; set; }
+        [Range(1, 20, ErrorMessage = "Largura inválida, digite um valor entre 1 e 20cm")]
+        [DisplayName("Largura(cm)")]
+        public int? Width { get; set; }
 
         [Required(ErrorMessage = "Altura obrigatória")]
-        [Range(1, 20, ErrorMessage = "Altura inválida, digite um valor entre 1 e 20")]
-        [DisplayName("Altura")]
-        public int? height { get; set; }
+        [Range(1, 20, ErrorMessage = "Altura inválida, digite um valor entre 1 e 20cm")]
+        [DisplayName("Altura(cm)")]
+        public int? Height { get; set; }
 
         [Required(ErrorMessage = "Profundidade obrigatória")]
-        [Range(1, 20, ErrorMessage = "Profundidade inválida, digite um valor entre 1 e 20")]
-        [DisplayName("Profundidade")]
-        public int? depth { get; set; }
+        [Range(1, 20, ErrorMessage = "Profundidade inválida, digite um valor entre 1 e 20cm")]
+        [DisplayName("Profundidade(cm)")]
+        public int? Depth { get; set; }
     }
 }

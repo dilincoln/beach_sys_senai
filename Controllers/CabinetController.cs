@@ -21,9 +21,23 @@ namespace Prova.Controllers
         // GET: Cabinet
         public async Task<IActionResult> Index()
         {
-            return _context.Cabinet != null
-                ? View(await _context.Cabinet.ToListAsync())
-                : Problem("Entity set 'ProvaContext.Cabinet'  is null.");
+            if (_context.Cabinet != null)
+            {
+                var cabinets = await _context.Cabinet.ToListAsync();
+
+                foreach (var cabinet in cabinets)
+                {
+                    var compartments = await GetCompartments(cabinet.Id);
+
+                    cabinet.Compartments = compartments;
+                }
+
+                return View(cabinets);
+            }
+            else
+            {
+                return Problem("Entity set 'ProvaContext.Cabinet'  is null.");
+            }
         }
 
         // GET: Cabinet/Details/5
@@ -160,6 +174,20 @@ namespace Prova.Controllers
         private bool CabinetExists(int id)
         {
             return (_context.Cabinet?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private async Task<ICollection<Compartment>> GetCompartments(int Id)
+        {
+            var compartments = _context.Compartment;
+
+            var compartmentsList = new List<Compartment>();
+
+            if (compartments != null)
+            {
+                compartmentsList = await compartments.Where(c => c.CabinetId == Id).ToListAsync();
+            }
+
+            return compartmentsList;
         }
     }
 }
