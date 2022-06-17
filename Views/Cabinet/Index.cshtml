@@ -25,36 +25,53 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <iframe src="@Html.DisplayFor(modelItem => item.MapsUrl)" frameborder="0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </td>
-            <td>
-                @if (item.Compartments is not null && item.Compartments.Count > 0) {
-                    <ul>
-                        @foreach (var compartment in item.Compartments) {
-                            <li>
-                                @string.Format("Número: {0}, Tamanho: {1}x{2}x{3}cm", compartment.Id, compartment.Height, compartment.Width, compartment.Depth)
-                                @if (compartment.UserId is not null) {
-                                    @string.Format("Usuário: {0}", compartment.UserId)
-                                }
-                            </li>
-                        }
-                    </ul>
-                } else {
-                    <p>Nenhum compartimento cadastrado</p>
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <iframe src="@Html.DisplayFor(modelItem => item.MapsUrl)"
+                    frameborder="0"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </td>
+                <td>
+                    @if (item.Compartments is not null && item.Compartments.Count > 0)
+                    {
+                        <ul>
+                            @foreach (var compartment in item.Compartments)
+                            {
+                                <li>
+                                    @string.Format("Número: {0}, Tamanho: {1}x{2}x{3}cm,", compartment.Id, compartment.Height,
+                        compartment.Width, compartment.Depth)
+                                    @if (compartment.User is not null)
+                                    {
+                                        @string.Format("Ocupado por: {0}", compartment.User.Name)
+                                    }
+                                    else
+                                    {
+                                        <a>Livre</a>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Nenhum compartimento cadastrado</p>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit"
+                    asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details"
+                    asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete"
+                    asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

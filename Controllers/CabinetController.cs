@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Prova.Models;
 
@@ -28,6 +23,21 @@ namespace Prova.Controllers
                 foreach (var cabinet in cabinets)
                 {
                     var compartments = await GetCompartments(cabinet.Id);
+
+                    foreach (var compartment in compartments)
+                    {
+                        var UserId = compartment.UserId;
+
+                        if (UserId != null)
+                        {
+                            var user = await GetUser(UserId);
+
+                            if (user != null)
+                            {
+                                compartment.User = user;
+                            }
+                        }
+                    }
 
                     cabinet.Compartments = compartments;
                 }
@@ -188,6 +198,26 @@ namespace Prova.Controllers
             }
 
             return compartmentsList;
+        }
+
+        // Async function to get User
+        private async Task<User?> GetUser(int? id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+
+            var userContext = _context.User;
+
+            if (userContext == null)
+            {
+                return null;
+            }
+
+            var user = await userContext.FirstOrDefaultAsync(u => u.Id == id);
+
+            return user;
         }
     }
 }

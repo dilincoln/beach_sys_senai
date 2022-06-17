@@ -1,8 +1,49 @@
-﻿@{
+﻿@model Prova.DTOs.AssignCompartmentFormData
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <h1 class="display-4">Seja bem vindo ao BeachSys</h1>
+
+    <h3>Veja as intruções abaixo</h3>
+    <div class="d-flex flex-column">
+        <a asp-area="nav-link"
+            asp-controller="User"
+            asp-action="Create">1. Crie seu usuário</a>
+
+        <p>2. Após criar seu usuário, selecione-o seu usuário e compartimento que deseja utilizar no formulário abaixo:
+        </p>
+
+        <form asp-action="Index"
+            class="my-4">
+            <div class="form-group mb-4">
+                <label asp-for="UserId"
+                    class="control-label"></label>
+                <select asp-for="UserId"
+                    class="form-control"
+                    asp-items="ViewBag.Users"></select>
+                <span asp-validation-for="UserId"
+                    class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label asp-for="CompartmentId"
+                    class="control-label"></label>
+                <select asp-for="CompartmentId"
+                    class="form-control"
+                    asp-items="ViewBag.AvailableCompartments"></select>
+                <span asp-validation-for="CompartmentId"
+                    class="text-danger"></span>
+            </div>
+            <span class="badge bg-success mb-4">@ViewBag.Success</span>
+            <div class="form-group">
+                <input type="submit"
+                    value="Associar"
+                    class="btn btn-primary" />
+            </div>
+        </form>
+
+        <a asp-action="Disassociate">Para remover o pertencer de um compartimento, clique aqui</a>
+    </div>
 </div>

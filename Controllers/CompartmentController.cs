@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +38,15 @@ namespace Prova.Controllers
                     {
                         compartment.User = user;
                     }
+                }
+
+                var CabinetId = compartment.CabinetId;
+
+                var cabinet = await GetCabinet(CabinetId);
+
+                if (cabinet != null)
+                {
+                    compartment.Cabinet = cabinet;
                 }
             }
 
@@ -255,6 +260,21 @@ namespace Prova.Controllers
             var user = await userContext.FirstOrDefaultAsync(u => u.Id == id);
 
             return user;
+        }
+
+        // Async function to get Cabinet
+        private async Task<Cabinet?> GetCabinet(int id)
+        {
+            var cabinetContext = _context.Cabinet;
+
+            if (cabinetContext == null)
+            {
+                return null;
+            }
+
+            var cabinet = await cabinetContext.FirstOrDefaultAsync(u => u.Id == id);
+
+            return cabinet;
         }
     }
 }

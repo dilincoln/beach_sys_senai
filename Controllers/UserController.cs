@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Prova.Models;
 
@@ -21,9 +16,9 @@ namespace Prova.Controllers
         // GET: User
         public async Task<IActionResult> Index()
         {
-              return _context.User != null ? 
-                          View(await _context.User.ToListAsync()) :
-                          Problem("Entity set 'ProvaContext.User'  is null.");
+            return _context.User != null
+                ? View(await _context.User.ToListAsync())
+                : Problem("Entity set 'ProvaContext.User'  is null.");
         }
 
         // GET: User/Details/5
@@ -34,8 +29,7 @@ namespace Prova.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var user = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -125,8 +119,7 @@ namespace Prova.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var user = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -140,23 +133,34 @@ namespace Prova.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.User == null)
+            if (_context.User == null || _context.Compartment == null)
             {
                 return Problem("Entity set 'ProvaContext.User'  is null.");
             }
             var user = await _context.User.FindAsync(id);
+
+            var compartments = await _context.Compartment.Where(c => c.UserId == id).ToListAsync();
+
+            foreach (var compartment in compartments)
+            {
+                compartment.UserId = null;
+            }
+
+            await _context.SaveChangesAsync();
+
             if (user != null)
             {
                 _context.User.Remove(user);
             }
-            
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-          return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

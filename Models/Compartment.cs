@@ -33,5 +33,7 @@ namespace Prova.Models
         public int? Depth { get; set; }
 
         public virtual User? User { get; set; }
+
+        public virtual Cabinet? Cabinet { get; set; }
     }
 }

@@ -1,0 +1,29 @@
+@model Prova.DTOs.DisassociateCompartmentFormData
+
+@{
+  ViewData["Title"] = "Home Page";
+}
+
+<div>
+  <h1 class="display-4">Para remover o pertencer de um compartimento, selecione o compartimento abaixo e clique com
+    `Desassociar`</h1>
+  <form asp-action="Disassociate"
+    class="my-4">
+    <div class="form-group mb-4">
+      <label asp-for="CompartmentId"
+        class="control-label"></label>
+      <select asp-for="CompartmentId"
+        class="form-control"
+        asp-items="ViewBag.UnavailableCompartments"></select>
+      <span asp-validation-for="CompartmentId"
+        class="text-danger"></span>
+    </div>
+    <span class="badge bg-success mb-4">@ViewBag.Success</span>
+    <div class="form-group">
+      <input type="submit"
+        value="Desassociar"
+        class="btn btn-primary" />
+    </div>
+  </form>
+</div>
+</div>
