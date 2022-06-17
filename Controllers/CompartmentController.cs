@@ -21,9 +21,31 @@ namespace Prova.Controllers
         // GET: Compartment
         public async Task<IActionResult> Index()
         {
-            return _context.Compartment != null
-                ? View(await _context.Compartment.ToListAsync())
-                : Problem("Entity set 'ProvaContext.Compartment'  is null.");
+            var compartmentContext = _context.Compartment;
+
+            if (compartmentContext == null)
+            {
+                return Problem("Entity set 'ProvaContext.Compartment'  is null.");
+            }
+
+            var compartments = await compartmentContext.ToListAsync();
+
+            foreach (var compartment in compartments)
+            {
+                var UserId = compartment.UserId;
+
+                if (UserId != null)
+                {
+                    var user = await GetUser(UserId);
+
+                    if (user != null)
+                    {
+                        compartment.User = user;
+                    }
+                }
+            }
+
+            return View(compartments);
         }
 
         // GET: Compartment/Details/5
@@ -39,6 +61,18 @@ namespace Prova.Controllers
             if (compartment == null)
             {
                 return NotFound();
+            }
+
+            var UserId = compartment.UserId;
+
+            if (UserId != null)
+            {
+                var user = await GetUser(UserId);
+
+                if (user != null)
+                {
+                    compartment.User = user;
+                }
             }
 
             return View(compartment);
@@ -201,6 +235,26 @@ namespace Prova.Controllers
             );
 
             return cabinetsSelectList.ToList();
+        }
+
+        // Async function to get User
+        private async Task<User?> GetUser(int? id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+
+            var userContext = _context.User;
+
+            if (userContext == null)
+            {
+                return null;
+            }
+
+            var user = await userContext.FirstOrDefaultAsync(u => u.Id == id);
+
+            return user;
         }
     }
 }

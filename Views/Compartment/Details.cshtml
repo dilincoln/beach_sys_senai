@@ -34,6 +34,22 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Depth)
         </dd>
+        <dt class = "col-sm-2">
+            @if (Model.User == null) {
+                <span>
+                    Livre
+                </span>
+            } else {
+                <span>
+                    Ocupado por:
+                </span>
+            }
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.User != null) {
+                @Html.DisplayFor(model => Model.User.Name)
+            }
+        </dd>
     </dl>
 </div>
 <div>

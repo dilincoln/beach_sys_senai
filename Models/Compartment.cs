@@ -31,5 +31,7 @@ namespace Prova.Models
         [Range(1, 20, ErrorMessage = "Profundidade inválida, digite um valor entre 1 e 20cm")]
         [DisplayName("Profundidade(cm)")]
         public int? Depth { get; set; }
+
+        public virtual User? User { get; set; }
     }
 }
